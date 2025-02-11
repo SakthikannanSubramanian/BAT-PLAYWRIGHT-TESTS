@@ -23,8 +23,8 @@ export class ProductDescriptionPage {
 
     async quantitySelection(quantity) {
         const inputQuantity = this.page.locator(this.productDescriptionSelectors.quantitySelectionInput);
-        await inputQuantity.clear();
-        await inputQuantity.fill(quantity);
+        await inputQuantity.first().fill('');
+        await inputQuantity.last().fill(quantity);
     }
 
     async clickOnAddToCart() {
