@@ -5,10 +5,11 @@ import { APIHelper } from '../backend/utils/apiHelper';
 import { Helper } from '../frontend/pages/helper';
 import { GraphQLHelper } from '../graphQL/utils/graphQLHelper';
 import { ProductDescriptionPage } from '../frontend/pages/productDescriptionPage';
+import { CheckoutPage } from '../frontend/pages/checkoutPage';
 import { allure } from 'allure-playwright';
 
 export const test = base.extend<{ loginPage: LoginPage, apiHelper: APIHelper,  
-  graphqlHelper: GraphQLHelper, uiHelper: Helper, allure: typeof allure,searchPage: SearchPage,productDescriptionPage: ProductDescriptionPage}>({
+  graphqlHelper: GraphQLHelper, uiHelper: Helper, allure: typeof allure,searchPage: SearchPage,productDescriptionPage: ProductDescriptionPage,checkoutPage: CheckoutPage}>({
 
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
@@ -39,6 +40,10 @@ export const test = base.extend<{ loginPage: LoginPage, apiHelper: APIHelper,
     await use(productDescriptionPage);
   },
 
+  checkoutPage: async ({ page }, use) => {
+    const checkoutPage = new CheckoutPage(page);
+    await use(checkoutPage);
+  },
 });
 
 export { expect } from '@playwright/test'; 
