@@ -19,7 +19,6 @@ export class LoginPage {
 
     async goTo() {
         await this.page.goto('/sign-in');
-
         const acceptAllButton = this.page.locator(this.loginSelectors.acceptAllBtn);
         await acceptAllButton.waitFor({ state: 'visible', timeout: 5000 });
         await acceptAllButton.click(); 
