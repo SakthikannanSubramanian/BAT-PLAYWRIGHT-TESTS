@@ -26,8 +26,13 @@ export class SearchPage {
         await this.page.click(this.searchSelectors.addToCartButton("2100"));
         await this.page.click(this.searchSelectors.addToCartButton("2105"));
         await this.page.click(this.searchSelectors.addToCartButton("3842"));
-        await this.page.click(this.searchSelectors.subMenu)
-        await this.page.click(this.searchSelectors.selectVuseGo)
-        await this.page.click(this.searchSelectors.clickOnProduct);
+        const subMenu = this.page.locator(this.searchSelectors.subMenu);
+        await subMenu.waitFor({state:'visible',timeout:5000});
+        await this.page.hover(this.searchSelectors.subMenu);
+        const selectVuseGo = this.page.locator(this.searchSelectors.selectVuseGo);
+        await selectVuseGo.first().click();
+        const clickOnPLPProduct = this.page.locator(this.searchSelectors.clickOnProduct);
+        await clickOnPLPProduct.waitFor({state:'visible',timeout:10000});
+        await clickOnPLPProduct.click();
     }
 }

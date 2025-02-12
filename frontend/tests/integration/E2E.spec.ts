@@ -1,12 +1,9 @@
 import { test } from '../../../fixtures/playwright.fixtures';
 
 const inputs = {
-email: 'testemailvusedeuat1@yopmail.com',
+//email: 'testemailvusedeuat1@yopmail.com',
+email:'batautotesting@mailinator.com',
 password: 'test@123',
-};
-
-const url ={
-url_PDP:"https://uat.vuse.com/de/de/vuse-e-zigaretten-kfz-halterung/",
 };
 
 const commonInputs = {
@@ -16,8 +13,7 @@ holderName:'Harsh Sahay',
 cardNumber:'4811567812345678',
 expirationDate:'12/29',
 cardDigit:'123',
-textToVerifyCheckout:"your order is successful"
-
+textToVerifyCheckout:"your order is successful",
 };
 
 test.describe('Login Tests', () => {
@@ -26,7 +22,7 @@ test.describe('Login Tests', () => {
       await loginPage.verifyAge();
     });
 
-    test('@integration Login with valid credentials', async ({ loginPage, searchPage, productDescriptionPage, checkoutPage}) => 
+    test('@integration Place Order', async ({ loginPage, searchPage, productDescriptionPage, checkoutPage}) => 
       {
       await loginPage.fillCredentials(inputs.email, inputs.password);
       await loginPage.submit();
