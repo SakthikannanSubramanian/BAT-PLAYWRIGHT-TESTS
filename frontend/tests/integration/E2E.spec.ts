@@ -9,8 +9,8 @@ password: 'test@123',
 const commonInputs = {
 searchTerm: 'cigarettes',
 qty:"3",
-holderName:'Harsh Sahay',
-cardNumber:'4811567812345678',
+holderName:'BAT Testing',
+cardNumber:'5555 5555 5555 4444',
 expirationDate:'12/29',
 cardDigit:'123',
 textToVerifyCheckout:"your order is successful",
@@ -22,8 +22,7 @@ test.describe('Login Tests', () => {
       await loginPage.verifyAge();
     });
 
-    test('@integration Place Order', async ({ loginPage, searchPage, productDescriptionPage, checkoutPage}) => 
-      {
+    test('@integration Place Order', async ({ loginPage, searchPage, productDescriptionPage, checkoutPage}) => {
       await loginPage.fillCredentials(inputs.email, inputs.password);
       await loginPage.submit();
       await loginPage.verifyTextVisible('Willkommen zurück, test');
