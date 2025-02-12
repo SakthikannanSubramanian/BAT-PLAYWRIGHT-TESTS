@@ -24,8 +24,11 @@ export class SearchPage {
         await searchBox.fill(searchTerm); 
         await this.page.keyboard.press('Enter');
         await this.page.click(this.searchSelectors.addToCartButton("2100"));
+        await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("2100"));
         await this.page.click(this.searchSelectors.addToCartButton("2105"));
+        await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("2105"));
         await this.page.click(this.searchSelectors.addToCartButton("3842"));
+        await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("3842"));
         const subMenu = this.page.locator(this.searchSelectors.subMenu);
         await subMenu.waitFor({state:'visible',timeout:5000});
         await this.page.hover(this.searchSelectors.subMenu);
@@ -34,5 +37,19 @@ export class SearchPage {
         const clickOnPLPProduct = this.page.locator(this.searchSelectors.clickOnProduct);
         await clickOnPLPProduct.waitFor({state:'visible',timeout:10000});
         await clickOnPLPProduct.click();
+    }
+
+    async waitForButtonToBeEnabled(WebElement) {
+        const startTime = Date.now();
+        const timeout = 12000;
+        while (Date.now() - startTime < timeout) {
+        const isEnabled = await this.page.locator(WebElement).isEnabled();
+        if (isEnabled) {
+          await expect(this.page.locator(WebElement)).toBeEnabled();
+          return;
+        }
+        await this.page.waitForTimeout(1000);
+      }
+      throw new Error(`Button did not become enabled within ${timeout}ms`);
     }
 }
