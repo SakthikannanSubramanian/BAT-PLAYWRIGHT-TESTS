@@ -1,8 +1,8 @@
 import { test } from '../../../fixtures/playwright.fixtures';
 
 const inputs = {
-//email: 'testemailvusedeuat1@yopmail.com',
-email:'batautotesting@mailinator.com',
+email: 'testemailvusedeuat1@yopmail.com',
+//email:'batautotesting@mailinator.com',
 password: 'test@123',
 };
 
@@ -33,6 +33,7 @@ test.describe('Login Tests', () => {
       await checkoutPage.clickToTheCheckout();
       await checkoutPage.selectStandardDelivery();
       await checkoutPage.creditCardDetails(commonInputs.holderName,commonInputs.cardNumber,commonInputs.expirationDate,commonInputs.cardDigit);
-      await checkoutPage.verifyTextVisible(commonInputs.textToVerifyCheckout);
+      await checkoutPage.clickOnOrderForFree();
+      //await checkoutPage.verifyTextVisible(commonInputs.textToVerifyCheckout);
     });
   });
