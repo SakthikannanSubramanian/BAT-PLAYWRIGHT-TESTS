@@ -19,7 +19,6 @@ export class ProductDescriptionPage {
 
     async quantitySelection(quantity) {
         const inputQuantity = this.page.locator(this.productDescriptionSelectors.quantitySelectionInput);
-        await this.searchPage.waitForElementToBeClickable(this.productDescriptionSelectors.quantitySelectionInput);
         for (let i =1; i < quantity ; i++) {
             await inputQuantity.waitFor({state:'visible',timeout:5000});
             await inputQuantity.click();

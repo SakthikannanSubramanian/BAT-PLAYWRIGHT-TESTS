@@ -1,8 +1,8 @@
 import { test } from '../../../fixtures/playwright.fixtures';
 
 const inputs = {
-email: 'testemailvusedeuat1@yopmail.com',
-//email:'batautotesting@mailinator.com',
+//email: 'testemailvusedeuat1@yopmail.com',
+email:'batautotesting@mailinator.com',
 password: 'test@123',
 };
 
@@ -13,7 +13,7 @@ holderName:'BAT Testing',
 cardNumber:'5555 5555 5555 4444',
 expirationDate:'12/29',
 cardDigit:'123',
-textToVerifyCheckout:"your order is successful",
+textToVerifyOrderConfirmation:"Vielen Dank für deine Bestellung",
 };
 
 test.describe('Login Tests', () => {
@@ -34,6 +34,7 @@ test.describe('Login Tests', () => {
       await checkoutPage.selectStandardDelivery();
       await checkoutPage.creditCardDetails(commonInputs.holderName,commonInputs.cardNumber,commonInputs.expirationDate,commonInputs.cardDigit);
       await checkoutPage.clickOnOrderForFree();
-      //await checkoutPage.verifyTextVisible(commonInputs.textToVerifyCheckout);
+      await checkoutPage.verifyTextVisible(commonInputs.textToVerifyOrderConfirmation);
+      await checkoutPage.getOrderNumber();
     });
   });

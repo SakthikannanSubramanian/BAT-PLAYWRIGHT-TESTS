@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { expect } from '../../fixtures/playwright.fixtures';
+import { Console } from 'console';
 
 export class CheckoutPage {
 
@@ -18,23 +19,23 @@ export class CheckoutPage {
         expirationDate: '//label[contains(text(),"ABLAUFDATUM")]/..//following-sibling::span//input',
         lastThreeDigits:'//label[contains(text(),"KARTENPRÜFZIFFER")]/..//following-sibling::span//input',
         orderForFree:'//span[contains(text(),"Kostenpflichtig bestellen")]',
-        thankU4OrderTxt: '//font[contains(text(),"Thank you for your order")]'
+        txt_OrderNumber: '//span[@class="orderConfirmationPageSimple-orderNumberHidden-8ox utils-visuallyHidden-uKK"]'
     };
 
     async clickToTheCheckout() {
         const checkoutBtn = this.page.locator(this.checkoutSelectors.toTheCheckout);
-        await this.page.waitForTimeout(5000);
-        await checkoutBtn.waitFor({ state: 'visible', timeout:30000});
+        await checkoutBtn.waitFor({ state: 'visible', timeout:20000});
         await checkoutBtn.click();
     }
 
     async selectStandardDelivery() {
         const standardDelivery = this.page.locator(this.checkoutSelectors.standardDeliveryRdBtn);
-        await standardDelivery.waitFor({state:'visible',timeout:30000});
+        await standardDelivery.waitFor({state:'visible',timeout:20000});
         await standardDelivery.click();
     }
 
     async creditCardDetails(holderName:string , cardNumber:string , expirationDate:string , cardDigit:string) {
+        await this.page.evaluate("window.scrollBy(0,300)");
         const creditCard = this.page.locator(this.checkoutSelectors.selectCreditCard)
         await creditCard.waitFor({state:'visible',timeout:5000})
         await creditCard.click();
@@ -52,6 +53,13 @@ export class CheckoutPage {
     }
 
     async verifyTextVisible(textToVerifyCheckout: string) {
-        await expect(this.page.getByText(textToVerifyCheckout)).toBeVisible({ timeout: 20000 });
+        await expect(this.page.getByText(textToVerifyCheckout)).toBeVisible({ timeout: 30000 });
+    }
+
+    async getOrderNumber(){
+        const orderNumber = this.page.locator(this.checkoutSelectors.txt_OrderNumber);
+        await orderNumber.waitFor({ state: 'visible', timeout: 5000 });
+        const orderNumberTxt =  await orderNumber.textContent();
+        console.log("Order Number is "+orderNumberTxt);
     }
 };

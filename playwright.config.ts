@@ -7,8 +7,8 @@ export default defineConfig({
     trace: 'on-first-retry',    
     screenshot: 'only-on-failure', 
     video: 'retain-on-failure', 
-    actionTimeout: 5000,
-    navigationTimeout: 30000, 
+    actionTimeout: 60000,
+    navigationTimeout: 100000,
   },
 
   projects: [
@@ -64,5 +64,5 @@ export default defineConfig({
     ],
   ],
   workers: 4,
-  timeout:30000,
+  timeout:90000,
 });
