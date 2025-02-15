@@ -15,5 +15,5 @@ test.describe('Login Tests', () => {
       await loginPage.fillCredentials(credentials.email, credentials.password);
       await loginPage.submit();
       await loginPage.verifyTextVisible('Willkommen zurück, test');
-    });
+    });'/create-account'
   });

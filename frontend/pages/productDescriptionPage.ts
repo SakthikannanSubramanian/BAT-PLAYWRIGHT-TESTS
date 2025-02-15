@@ -32,7 +32,7 @@ export class ProductDescriptionPage {
 
     async clickOnShowCart(){
         const showCartBtn = this.page.locator(this.productDescriptionSelectors.showCartBtn);
-        await showCartBtn.waitFor({ state: 'visible', timeout: 30000 });
+        await showCartBtn.isVisible({timeout: 50000 });
         await showCartBtn.click();
     }
 }

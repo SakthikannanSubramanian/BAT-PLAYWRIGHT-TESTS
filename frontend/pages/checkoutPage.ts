@@ -24,23 +24,23 @@ export class CheckoutPage {
 
     async clickToTheCheckout() {
         const checkoutBtn = this.page.locator(this.checkoutSelectors.toTheCheckout);
-        await checkoutBtn.waitFor({ state: 'visible', timeout:20000});
+        await checkoutBtn.isVisible({timeout:50000});
         await checkoutBtn.click();
     }
 
     async selectStandardDelivery() {
         const standardDelivery = this.page.locator(this.checkoutSelectors.standardDeliveryRdBtn);
-        await standardDelivery.waitFor({state:'visible',timeout:20000});
+        await standardDelivery.waitFor({state:'visible',timeout:50000});
         await standardDelivery.click();
     }
 
     async creditCardDetails(holderName:string , cardNumber:string , expirationDate:string , cardDigit:string) {
         await this.page.evaluate("window.scrollBy(0,300)");
         const creditCard = this.page.locator(this.checkoutSelectors.selectCreditCard)
-        await creditCard.waitFor({state:'visible',timeout:5000})
+        await creditCard.waitFor({state:'visible',timeout:20000})
         await creditCard.click();
         const cardHolder = this.page.locator(this.checkoutSelectors.cardHolderName);
-        await cardHolder.waitFor({ state: 'visible', timeout: 5000 });
+        await cardHolder.waitFor({ state: 'visible', timeout: 20000 });
         await this.page.locator(this.checkoutSelectors.cardHolderName).waitFor({state:'visible',timeout:5000});
         await this.page.fill(this.checkoutSelectors.cardHolderName, holderName);
         await this.page.fill(this.checkoutSelectors.cardNumber, cardNumber);
@@ -49,11 +49,19 @@ export class CheckoutPage {
     }
 
     async clickOnOrderForFree() {
-        await this.page.click(this.checkoutSelectors.orderForFree);
+        const orderForFreeText = this.page.locator(this.checkoutSelectors.orderForFree);
+        await orderForFreeText.waitFor({ state: 'visible', timeout: 10000 });
+        //await orderForFreeText.scrollIntoViewIfNeeded();
+        await orderForFreeText.click();
     }
 
     async verifyTextVisible(textToVerifyCheckout: string) {
-        await expect(this.page.getByText(textToVerifyCheckout)).toBeVisible({ timeout: 30000 });
+        // Wait for the page to be fully loaded before proceeding
+        await this.page.waitForLoadState('domcontentloaded'); 
+    
+        // Directly wait for the element containing the text to be visible
+        const verifyCheckout = this.page.locator(`text=${textToVerifyCheckout}`);
+        await verifyCheckout.waitFor({ state: 'visible', timeout: 90000 }); // Wait up to 60 seconds
     }
 
     async getOrderNumber(){

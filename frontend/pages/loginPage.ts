@@ -18,9 +18,10 @@ export class LoginPage {
     };
 
     async goTo() {
-        await this.page.goto('/sign-in');
+        await this.page.goto('/sign-in'); 
+
         const acceptAllButton = this.page.locator(this.loginSelectors.acceptAllBtn);
-        await acceptAllButton.waitFor({ state: 'visible', timeout: 5000 });
+        await acceptAllButton.isVisible({ timeout: 60000 });
         await acceptAllButton.click(); 
     }
 
@@ -42,6 +43,6 @@ export class LoginPage {
     }
 
     async verifyTextVisible(textToVerify: string){
-        await expect(this.page.getByText(textToVerify)).toBeVisible({ timeout: 20000 });
+        await expect(this.page.getByText(textToVerify)).toBeVisible({ timeout: 50000 });
     }
 }

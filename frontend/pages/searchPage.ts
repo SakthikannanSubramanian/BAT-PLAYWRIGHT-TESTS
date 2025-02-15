@@ -41,18 +41,25 @@ export class SearchPage {
         await clickOnPLPProduct.click();
     }
 
-    async waitForButtonToBeEnabled(WebElement) {
-        const startTime = Date.now();
-        const timeout = 20000;
-        while (Date.now() - startTime < timeout) {
-        const isEnabled = await this.page.locator(WebElement).isEnabled();
-        if (isEnabled) {
-          await expect(this.page.locator(WebElement)).toBeEnabled();
-          return;
-        }
-        await this.page.waitForTimeout(1000);
-      }
-      throw new Error(`Button did not become enabled within ${timeout}ms`);
+    async waitForButtonToBeEnabled(xpath: string) {
+        const button = this.page.locator(`xpath=${xpath}`);
+    
+        // Ensure the button is visible first
+        await button.waitFor({ state: 'visible', timeout: 5000 });
+    
+        // Wait until the button becomes enabled
+        await this.page.waitForFunction(
+            (xpath) => {
+                const btn = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue as HTMLButtonElement;
+                return btn && !btn.disabled;
+            },
+            xpath,
+            { timeout: 20000 }
+        );
+    
+        // Final assertion to confirm button is enabled
+        await expect(button).toBeEnabled();
     }
+    
 
 }
