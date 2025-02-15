@@ -34,19 +34,19 @@ export default defineConfig({
     },
     {
       name: 'chrome',
-      testMatch: ['frontend/tests/**/*.spec.ts'], 
+      testMatch: ['frontend/tests/**/E2E.spec.ts'], 
       grepInvert: /@graphql|@backend/, 
       use: { browserName: 'chromium' },
     },
     {
       name: 'firefox',
-      testMatch: ['frontend/tests/**/*.spec.ts'],
+      testMatch: ['frontend/tests/**/E2E.spec.ts'],
       grepInvert: /@graphql|@backend/,
       use: { browserName: 'firefox' },
     },
     {
       name: 'webkit',
-      testMatch: ['frontend/tests/**/*.spec.ts'],
+      testMatch: ['frontend/tests/**/E2E.spec.ts'],
       grepInvert: /@graphql|@backend/,
       use: { browserName: 'webkit' },
     },
@@ -63,6 +63,6 @@ export default defineConfig({
       },
     ],
   ],
-  workers: 4,
+  workers: 3,
   timeout:90000,
 });

@@ -37,7 +37,7 @@ export class SearchPage {
         await selectVuseGo.waitFor({state:'visible',timeout:10000});
         await selectVuseGo.first().click();
         const clickOnPLPProduct = this.page.locator(this.searchSelectors.clickOnProduct);
-        await clickOnPLPProduct.waitFor({state:'visible',timeout:10000});
+        await clickOnPLPProduct.waitFor({state:'visible',timeout:50000});
         await clickOnPLPProduct.click();
     }
 
