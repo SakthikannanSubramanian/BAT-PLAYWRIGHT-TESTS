@@ -19,7 +19,9 @@ export class CheckoutPage {
         expirationDate: '//label[contains(text(),"ABLAUFDATUM")]/..//following-sibling::span//input',
         lastThreeDigits:'//label[contains(text(),"KARTENPRÜFZIFFER")]/..//following-sibling::span//input',
         orderForFree:'//span[contains(text(),"Kostenpflichtig bestellen")]',
-        txt_OrderNumber: '//span[@class="orderConfirmationPageSimple-orderNumberHidden-8ox utils-visuallyHidden-uKK"]'
+        txt_OrderNumber: '//span[@class="orderConfirmationPageSimple-orderNumberHidden-8ox utils-visuallyHidden-uKK"]',
+        deliveryMethod: (deliveryMethod) =>`//span[text()="${deliveryMethod}"]/ancestor::form[contains(@class,"shippingMethod-form")]//input`
+
     };
 
     async clickToTheCheckout() {
@@ -32,6 +34,10 @@ export class CheckoutPage {
         const standardDelivery = this.page.locator(this.checkoutSelectors.standardDeliveryRdBtn);
         await standardDelivery.waitFor({state:'visible',timeout:50000});
         await standardDelivery.click();
+    }
+    async verifyDeliveryMethod(deliveryMethod) {
+        expect(this.page.locator(this.checkoutSelectors.deliveryMethod(deliveryMethod))).toBeChecked();
+
     }
 
     async creditCardDetails(holderName:string , cardNumber:string , expirationDate:string , cardDigit:string) {

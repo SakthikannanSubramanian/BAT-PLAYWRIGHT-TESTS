@@ -25,6 +25,15 @@ export class LoginPage {
         await acceptAllButton.click(); 
     }
 
+    async goToProduction() {
+        await this.page.goto('https://vuse.com/de/de/sign-in'); 
+
+        const acceptAllButton = this.page.locator(this.loginSelectors.acceptAllBtn);
+        await acceptAllButton.isVisible({ timeout: 60000 });
+        await acceptAllButton.click(); 
+    }
+
+
     async verifyAge(){
         await this.page.getByText('ICH BIN 18 JAHRE ODER ÄLTER').click();
     }
