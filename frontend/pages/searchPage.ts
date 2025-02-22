@@ -14,13 +14,13 @@ export class SearchPage {
         addToCartButton : (productId) => `//a[@data-id="${productId}"]/ancestor::form//button[@type="submit"]`,
         subMenu: '[data-submenu="2"]',
         selectVuseGo: '(//a[contains(text(),"Vuse GO")])[2]',
-        clickOnProduct: '//a[@data-id="6647"]/ancestor::form//img[@loading="eager"]',
+        clickOnFirstProduct: (productId) => `//a[@data-id="${productId}"]/ancestor::form//img[@loading="eager"]`,
 
     };
 
     async searchProduct(searchTerm: string) {
-        const searchBox = this.page.locator(this.searchSelectors.searchBox).isVisible();
-
+        const searchBox = this.page.locator(this.searchSelectors.searchBox);
+        await searchBox.waitFor({ state: 'visible'});
         await searchBox.fill(searchTerm); 
         await this.page.keyboard.press('Enter');
     };
@@ -39,10 +39,10 @@ export class SearchPage {
         const subMenu = this.page.locator(this.searchSelectors.subMenu).isVisible();
         await this.page.hover(this.searchSelectors.subMenu);
         const selectVuseGo = this.page.locator(this.searchSelectors.selectVuseGo);
-        await selectVuseGo.waitFor({state:'visible',timeout:10000});
+        await selectVuseGo.waitFor({state:'visible'});
         await selectVuseGo.first().click();
-        const clickOnPLPProduct = this.page.locator(this.searchSelectors.clickOnProduct);
-        await clickOnPLPProduct.waitFor({state:'visible',timeout:10000});
+        const clickOnPLPProduct = this.page.locator(this.searchSelectors.clickOnFirstProduct('7747'));
+        await clickOnPLPProduct.waitFor({state:'visible'});
         await clickOnPLPProduct.click();
     }
 
@@ -50,7 +50,7 @@ export class SearchPage {
         const button = this.page.locator(`xpath=${xpath}`);
     
         // Ensure the button is visible first
-        await button.waitFor({ state: 'visible', timeout: 5000 });
+        await button.waitFor({ state: 'visible'});
     
         // Wait until the button becomes enabled
         await this.page.waitForFunction(
