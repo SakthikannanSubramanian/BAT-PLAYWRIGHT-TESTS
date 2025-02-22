@@ -19,19 +19,24 @@ export class SearchPage {
     };
 
     async searchProduct(searchTerm: string) {
-        const searchBox = this.page.locator(this.searchSelectors.searchBox);
-        await searchBox.waitFor({ state: 'visible', timeout: 5000 });
+        const searchBox = this.page.locator(this.searchSelectors.searchBox).isVisible();
+
         await searchBox.fill(searchTerm); 
         await this.page.keyboard.press('Enter');
-        await this.page.locator(this.searchSelectors.addToCartButton("2100")).waitFor({state:'visible',timeout:20000});
+    };
+
+    async addProductFromPLP() {
+        await this.page.locator(this.searchSelectors.addToCartButton("2100")).isVisible();
         await this.page.click(this.searchSelectors.addToCartButton("2100"));
         await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("2100"));
         await this.page.click(this.searchSelectors.addToCartButton("2105"));
         await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("2105"));
         await this.page.click(this.searchSelectors.addToCartButton("3842"));
         await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("3842"));
-        const subMenu = this.page.locator(this.searchSelectors.subMenu);
-        await subMenu.waitFor({state:'visible',timeout:10000});
+    }
+
+    async navigateToPDPFromSubmenu() {
+        const subMenu = this.page.locator(this.searchSelectors.subMenu).isVisible();
         await this.page.hover(this.searchSelectors.subMenu);
         const selectVuseGo = this.page.locator(this.searchSelectors.selectVuseGo);
         await selectVuseGo.waitFor({state:'visible',timeout:10000});
