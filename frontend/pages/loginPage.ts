@@ -19,7 +19,6 @@ export class LoginPage {
 
     async goTo() {
         await this.page.goto('/sign-in'); 
-
         const acceptAllButton = this.page.locator(this.loginSelectors.acceptAllBtn);
         await acceptAllButton.isVisible({ timeout: 60000 });
         await acceptAllButton.click(); 
@@ -27,7 +26,6 @@ export class LoginPage {
 
     async goToProduction() {
         await this.page.goto('https://vuse.com/de/de/sign-in'); 
-
         const acceptAllButton = this.page.locator(this.loginSelectors.acceptAllBtn);
         await acceptAllButton.isVisible({ timeout: 60000 });
         await acceptAllButton.click(); 

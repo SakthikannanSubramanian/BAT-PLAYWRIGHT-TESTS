@@ -21,7 +21,6 @@ export class CheckoutPage {
         orderForFree:'//span[contains(text(),"Kostenpflichtig bestellen")]',
         txt_OrderNumber: '//span[@class="orderConfirmationPageSimple-orderNumberHidden-8ox utils-visuallyHidden-uKK"]',
         deliveryMethod: (deliveryMethod) =>`//span[text()="${deliveryMethod}"]/ancestor::form[contains(@class,"shippingMethod-form")]//input`
-
     };
 
     async clickToTheCheckout() {

@@ -25,14 +25,10 @@ export class SearchPage {
         await this.page.keyboard.press('Enter');
     };
 
-    async addProductFromPLP() {
-        await this.page.locator(this.searchSelectors.addToCartButton("2100")).isVisible();
-        await this.page.click(this.searchSelectors.addToCartButton("2100"));
-        await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("2100"));
-        await this.page.click(this.searchSelectors.addToCartButton("2105"));
-        await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("2105"));
-        await this.page.click(this.searchSelectors.addToCartButton("3842"));
-        await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton("3842"));
+    async addProductFromPLP(productId: string) {
+        await this.page.locator(this.searchSelectors.addToCartButton(productId)).isVisible();
+        await this.page.click(this.searchSelectors.addToCartButton(productId));
+        await this.waitForButtonToBeEnabled(this.searchSelectors.addToCartButton(productId));
     }
 
     async navigateToPDPFromSubmenu() {
