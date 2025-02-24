@@ -11,4 +11,11 @@ export class Helper {
     async pause(){
         this.page.pause();
     }
+
+    async setViewPortToMobile(){
+        this.page.setViewportSize({
+            width: 640,
+            height: 480,
+        });
+    }
 }
