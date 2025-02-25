@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { expect } from '../../fixtures/playwright.fixtures';
+import { CommonFunction } from '../pages/commonFunction';
 
 export class LoginPage {
 
@@ -14,7 +15,12 @@ export class LoginPage {
         passwordInput: '[name="password"]',
         submitButton: '//button/span[contains(text(), "EINLOGGEN")]',
         emailError:'#email-errorText',
-        acceptAllBtn: '#onetrust-accept-btn-handler'
+        acceptAllBtn: '#onetrust-accept-btn-handler',
+        logoutButtonSideBar: '//a[contains(text(),"Ausloggen")]',
+        redirectionIn5SecMessage: '//p[contains(@class,"signoutPage-signoutContent")]',
+        emailBlankErrMessage:'//label[contains(text(),"E-Mail")]/following-sibling::p',
+        passwordBlankErrMessage: '//label[contains(text(),"Passwort")]/following-sibling::p',
+        incorrectPasswordErrMessage: '//div[contains(@class,"signInPage-module")]//span[contains(@class,"errorMessage")]',
     };
 
     async goTo() {
@@ -42,7 +48,7 @@ export class LoginPage {
     }
 
     async submit() {
-        await this.page.click(this.loginSelectors.submitButton);
+        await this.page.click(this.loginSelectors.submitButton,{timeout:30000});
     }
 
     async getEmailErrorMessage() : Promise<String>{
@@ -51,5 +57,34 @@ export class LoginPage {
 
     async verifyTextVisible(textToVerify: string){
         await expect(this.page.getByText(textToVerify)).toBeVisible({ timeout: 50000 });
+    }
+
+    async clickOnLogoutFromSideBar(){
+        await this.page.click(this.loginSelectors.logoutButtonSideBar);
+    }
+
+    async logoutMessageValidation(expectedText){
+        await this.verifyTextPresent(this.loginSelectors.redirectionIn5SecMessage,expectedText);
+    }
+
+    async verifyTextPresent(element,expectedText){
+        const actualText = await this.page.locator(element).textContent({timeout:60000});
+        await expect(actualText).toBe(expectedText);
+    }
+
+    async verifyBlankFieldErrorMessage(){
+        await this.submit();
+        await this.verifyTextPresent(this.loginSelectors.emailBlankErrMessage,"Pflichtfeld. Bitte ausfüllen.");
+        await this.verifyTextPresent(this.loginSelectors.passwordBlankErrMessage,"Pflichtfeld. Bitte ausfüllen.");
+    }
+
+    async verifyIncorrectPasswordErrorMessage(){
+        await this.submit();
+        await this.verifyTextPresent(this.loginSelectors.incorrectPasswordErrMessage,"Die Konto-Anmeldung war nicht korrekt oder dein Konto ist vorübergehend deaktiviert. Bitte warte und versuche es später erneut.");
+    }
+
+    async verifyInvalidEmailErrorMessage(){
+        await this.submit();
+        await this.verifyTextPresent(this.loginSelectors.emailBlankErrMessage,"Ungültige Eingabe. Bitte gebe deine E-Mail-Adresse im richtigen Format ein: beispiel@domain.com");
     }
 }
