@@ -1,5 +1,6 @@
 import { test } from '../../../fixtures/playwright.fixtures';
 import { CommonFunction } from '../../pages/commonFunction';
+import { SearchPage } from '../../pages/searchPage';
 
 const credentials = {
   email: 'bat-auto-chrome@mailinator.com',
@@ -20,18 +21,21 @@ test.describe('Login Tests', () => {
     await loginPage.verifyAge();
   });
 
-  test('@integration Login/Logout with Chat Function Validation ', { tag: "@integration" }, async ({ allure,commonFunction,homePage,loginPage }) => {
+  test('@integration Login/Logout with Chat Function Validation ', { tag: "@integration" }, async ({ allure,homePage,loginPage }) => {
     await allure.step(`Login Function - Username and Password Blank Field Error Message Validation`,async() => {
+      await loginPage.submit();
       await loginPage.verifyBlankFieldErrorMessage();
     });
 
     await allure.step(`Login Function - Incorrect Password Error Message with valid username as ${credentials.email}`, async () => { 
-      await loginPage.fillCredentials(credentials.email, credentials.invalidPassword);
-      await loginPage.verifyIncorrectPasswordErrorMessage();
+        await loginPage.fillCredentials(credentials.email, credentials.invalidPassword);
+        await loginPage.submit();
+        await loginPage.verifyIncorrectPasswordErrorMessage();
     });
 
     await allure.step(`Login Function - Invalid Username as ${credentials.invalidEmail} Error Message validation`, async () => { 
       await loginPage.fillCredentials(credentials.invalidEmail, credentials.password);
+      await loginPage.submit();
       await loginPage.verifyInvalidEmailErrorMessage();
     });
 
