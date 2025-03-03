@@ -45,10 +45,8 @@ export class SearchPage {
     async waitForButtonToBeEnabled(xpath: string) {
         const button = this.page.locator(`xpath=${xpath}`);
     
-        // Ensure the button is visible first
         await button.waitFor({ state: 'visible'});
     
-        // Wait until the button becomes enabled
         await this.page.waitForFunction(
             (xpath) => {
                 const btn = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue as HTMLButtonElement;
@@ -58,7 +56,6 @@ export class SearchPage {
             { timeout: 20000 }
         );
     
-        // Final assertion to confirm button is enabled
         await expect(button).toBeEnabled();
     }
     

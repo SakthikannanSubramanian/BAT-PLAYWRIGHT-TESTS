@@ -4,15 +4,17 @@ import { APIHelper } from '../backend/utils/apiHelper';
 import { CheckoutPage } from '../frontend/pages/checkoutPage';
 import {CommonFunction } from '../frontend/pages/commonFunction';
 import { GraphQLHelper } from '../graphQL/utils/graphQLHelper';
+import { GraphQLUtils } from '../graphQL/utils/graphQLUtils'
 import {HomePage} from '../frontend/pages/homePage'; 
 import { Helper } from '../frontend/pages/helper';
 import { LoginPage } from '../frontend/pages/loginPage'; 
 import { ProductDescriptionPage } from '../frontend/pages/productDescriptionPage';
 import { SearchPage } from '../frontend/pages/searchPage'; 
 
+
 export const test = base.extend<{ allure: typeof allure,apiHelper: APIHelper,checkoutPage: CheckoutPage,commonFunction: CommonFunction,
   graphqlHelper: GraphQLHelper, homePage:HomePage,uiHelper: Helper, loginPage: LoginPage,
-  productDescriptionPage: ProductDescriptionPage,searchPage: SearchPage,}>({
+  productDescriptionPage: ProductDescriptionPage,searchPage: SearchPage, graphQLUtils: GraphQLUtils}>({
 
     allure: async ({}, use) => {
       await use(allure);
@@ -37,6 +39,13 @@ export const test = base.extend<{ allure: typeof allure,apiHelper: APIHelper,che
       const endpoint = baseURL ? baseURL : 'https://uat.vuse.com/de/de/graphql' 
       const graphqlHelper = new GraphQLHelper(request,endpoint);
       await use(graphqlHelper);
+    },
+
+    graphQLUtils: async ({ request, baseURL }, use) => {
+      const endpoint = baseURL ? baseURL : 'https://uat.vuse.com/de/de/graphql' 
+      const graphqlHelper = new GraphQLHelper(request, endpoint);
+      const graphqlUtils = new GraphQLUtils(graphqlHelper);
+      await use(graphqlUtils);
     },
   
     homePage: async ({ page }, use) => {

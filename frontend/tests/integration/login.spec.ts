@@ -23,7 +23,7 @@ test.describe('Login Tests', () => {
   });
 
   //Sample Hybrid approach
-  // test('Verify Checkout', { tag: ["@integration", "@mobile"] }, async ({ loginPage, uiHelper, graphQLHelper }) => {
+  // test('Verify Checkout', { tag: ["@integration", "@mobile"] }, async ({ loginPage, uiHelper, graphQLHelper/ Utils }) => {
 
   //   Pre requisites using API/ GraphQL
   //   await graphQLHelper.login(xxx,yyy) ;

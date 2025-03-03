@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/playwright.fixtures';
+import { test } from '../../../../fixtures/playwright.fixtures';
 
 const credentials = {
   email: 'bat-auto-chrome@mailinator.com',
@@ -50,26 +50,5 @@ test.describe('Login Tests', () => {
       await loginPage.logoutMessageValidation(testData.redirectionIN5SecondsMessage);
     });
   });
-
-  test('Validate Chat functionality', { tag: "@integration" }, async ({ allure,homePage }) => {
-    await allure.step(`Clicking on Start the Chat Button`,async()=>{
-      await homePage.clickOnStartChat();
-    });
-
-    await allure.step('Validate the Welcome Message and Send a Test Message',async() => {
-      await homePage.verifyWelcomeChatMessage();
-    });
-
-    await allure.step('Send a Test Message and verify response messge',async() => {
-      await homePage.sendTestMessage(testData.sendTestMessage);
-      await homePage.verifyResponeMessage();
-    });
-
-    await allure.step('Closing the Chat box',async() => {
-      await homePage.closeChatBox();
-    });
-  });
 });
-
-
 

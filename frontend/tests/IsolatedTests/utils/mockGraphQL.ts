@@ -5,10 +5,7 @@ export async function mockGraphQL(page: Page, baseURL: string | undefined, opera
     const request = await route.request();
     const postData = await request.postDataJSON();
 
-
-    console.log(postData.operationName)
     if (postData.operationName === operationName) {
-      console.log("Am here");
       await route.fulfill({
         status: 200,
         contentType: 'application/json',

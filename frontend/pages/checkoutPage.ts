@@ -1,10 +1,10 @@
 import { Page } from '@playwright/test';
 import { expect } from '../../fixtures/playwright.fixtures';
-import { Console } from 'console';
 
 export class CheckoutPage {
 
-    private page: Page; 
+    private page: Page;
+    private timeout = 10000;
 
     constructor(page: Page) {
         this.page = page;
@@ -34,9 +34,9 @@ export class CheckoutPage {
         await standardDelivery.waitFor({state:'visible',timeout:50000});
         await standardDelivery.click();
     }
-    async verifyDeliveryMethod(deliveryMethod) {
-        expect(this.page.locator(this.checkoutSelectors.deliveryMethod(deliveryMethod))).toBeChecked();
 
+    async verifyDeliveryMethod(deliveryMethod: string) {
+        expect(this.page.locator(this.checkoutSelectors.deliveryMethod(deliveryMethod))).toBeChecked();
     }
 
     async creditCardDetails(holderName:string , cardNumber:string , expirationDate:string , cardDigit:string) {
@@ -56,17 +56,13 @@ export class CheckoutPage {
     async clickOnOrderForFree() {
         const orderForFreeText = this.page.locator(this.checkoutSelectors.orderForFree);
         await orderForFreeText.waitFor({ state: 'visible', timeout: 10000 });
-        //await orderForFreeText.scrollIntoViewIfNeeded();
         await orderForFreeText.click();
     }
 
     async verifyTextVisible(textToVerifyCheckout: string) {
-        // Wait for the page to be fully loaded before proceeding
         await this.page.waitForLoadState('domcontentloaded'); 
-    
-        // Directly wait for the element containing the text to be visible
         const verifyCheckout = this.page.locator(`text=${textToVerifyCheckout}`);
-        await verifyCheckout.waitFor({ state: 'visible', timeout: 90000 }); // Wait up to 60 seconds
+        await verifyCheckout.waitFor({ state: 'visible', timeout: 90000 });
     }
 
     async getOrderNumber(){

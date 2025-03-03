@@ -1,11 +1,8 @@
 import { Page } from '@playwright/test';
-import { expect } from '../../fixtures/playwright.fixtures';
-import { SearchPage } from './searchPage';
 
 export class ProductDescriptionPage {
 
     private page: Page; 
-    private searchPage:SearchPage;
 
     constructor(page: Page) {
         this.page = page;
@@ -27,7 +24,6 @@ export class ProductDescriptionPage {
 
     async clickOnAddToCart() {
         await this.page.click(this.productDescriptionSelectors.addToCartBtn);
-        //await this.searchPage.waitForButtonToBeEnabled(this.productDescriptionSelectors.addToCartBtn);
     }
 
     async clickOnShowCart(){
