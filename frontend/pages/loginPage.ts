@@ -14,6 +14,7 @@ export class LoginPage {
         usernameInput: '[name="email"]',
         passwordInput: '[name="password"]',
         submitButton: '//button/span[contains(text(), "EINLOGGEN")]',
+        labelPassword: '//label[contains(text(),"Passwort")]',
         emailError:'#email-errorText',
         acceptAllBtn: '#onetrust-accept-btn-handler',
         logoutButtonSideBar: '//a[contains(text(),"Ausloggen")]',
@@ -45,10 +46,13 @@ export class LoginPage {
     async fillCredentials(username: string, password: string) {
         await this.page.fill(this.loginSelectors.usernameInput, username);
         await this.page.fill(this.loginSelectors.passwordInput, password);
+        await this.page.click(this.loginSelectors.labelPassword);
     }
 
     async submit() {
-        await this.page.click(this.loginSelectors.submitButton,{timeout:30000});
+        const submitButton = this.page.locator(this.loginSelectors.submitButton);
+        await submitButton.isVisible({ timeout: 30000 });
+        await submitButton.click();
     }
 
     async getEmailErrorMessage() : Promise<String>{
@@ -67,24 +71,21 @@ export class LoginPage {
         await this.verifyTextPresent(this.loginSelectors.redirectionIn5SecMessage,expectedText);
     }
 
-    async verifyTextPresent(element,expectedText){
-        const actualText = await this.page.locator(element).textContent({timeout:60000});
-        await expect(actualText).toBe(expectedText);
+    async verifyTextPresent(element, expectedText) {
+          const actualText = await this.page.locator(element).textContent({ timeout: 60000 });
+          await expect(actualText).toBe(expectedText);
     }
 
     async verifyBlankFieldErrorMessage(){
-        await this.submit();
         await this.verifyTextPresent(this.loginSelectors.emailBlankErrMessage,"Pflichtfeld. Bitte ausfüllen.");
         await this.verifyTextPresent(this.loginSelectors.passwordBlankErrMessage,"Pflichtfeld. Bitte ausfüllen.");
     }
 
     async verifyIncorrectPasswordErrorMessage(){
-        await this.submit();
         await this.verifyTextPresent(this.loginSelectors.incorrectPasswordErrMessage,"Die Konto-Anmeldung war nicht korrekt oder dein Konto ist vorübergehend deaktiviert. Bitte warte und versuche es später erneut.");
     }
 
     async verifyInvalidEmailErrorMessage(){
-        await this.submit();
         await this.verifyTextPresent(this.loginSelectors.emailBlankErrMessage,"Ungültige Eingabe. Bitte gebe deine E-Mail-Adresse im richtigen Format ein: beispiel@domain.com");
     }
 }
