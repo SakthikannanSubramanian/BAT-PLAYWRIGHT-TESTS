@@ -15,10 +15,11 @@ export const mockLoginGraphQLErrorResponse = {
     }
   };
 
-    export const mockLoginGraphQLSuccessResponse = {
+    export const mockLoginGraphQLSuccessResponse = 
+      {
         "data": {
             "generateCustomerToken": {
-                "token": "eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjUyNjA2NzgsInV0eXBpZCI6MywiaWF0IjoxNzM5MTc0OTgwLCJleHAiOjE3MzkxNzg1ODB9.YqWHxMbWflyZ1b3moKkIak32XaICBJlYcL3PoaYMIzQ",
+                "token": "eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjUyNjA2NzgsInV0eXBpZCI6MywiaWF0IjoxNzQwNDgzOTI0LCJleHAiOjE3NDA0ODc1MjR9.Ut6cAWcTaKvD2OIlK1r9m5hO6kcE1DMYKM0pYOSDVYE",
                 "__typename": "CustomerToken"
             }
         }
