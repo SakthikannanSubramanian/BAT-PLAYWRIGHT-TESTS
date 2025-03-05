@@ -16,7 +16,7 @@ export class GraphQLHelper {
       headers: {
         'accept': '*/*',
         'content-type': 'application/json',
-        'origin': 'https://uat.vuse.com',
+        'origin': 'BASE URL',
         'store': 'vuse_de_de_de',
        ...(headers || {}),
       },

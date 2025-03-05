@@ -36,13 +36,13 @@ export const test = base.extend<{ allure: typeof allure,apiHelper: APIHelper,che
     },
 
     graphqlHelper: async ({ request, baseURL }, use) => {
-      const endpoint = baseURL ? baseURL : 'https://uat.vuse.com/de/de/graphql' 
+      const endpoint = baseURL ? baseURL : 'BASE URL' 
       const graphqlHelper = new GraphQLHelper(request,endpoint);
       await use(graphqlHelper);
     },
 
     graphQLUtils: async ({ request, baseURL }, use) => {
-      const endpoint = baseURL ? baseURL : 'https://uat.vuse.com/de/de/graphql' 
+      const endpoint = baseURL ? baseURL : 'BASE URL' 
       const graphqlHelper = new GraphQLHelper(request, endpoint);
       const graphqlUtils = new GraphQLUtils(graphqlHelper);
       await use(graphqlUtils);

@@ -3,7 +3,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   use: {
     headless: true,              
-    baseURL: 'https://uat.vuse.com/de/de', 
+    baseURL: 'BASE URL', 
     trace: 'on-first-retry',    
     screenshot: 'only-on-failure', 
     video: 'retain-on-failure', 
@@ -17,7 +17,7 @@ export default defineConfig({
       testMatch: ['graphQL/tests/**/*.spec.ts'],  
       grep: /@graphql/,
       use:{
-        baseURL: 'https://uat.vuse.com/de/de/graphql', 
+        baseURL: 'BASE URL', 
         headless: true,   
       }  
     },
