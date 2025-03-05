@@ -1,0 +1,22 @@
+version: '3'
+services:
+  shard1:
+    build: .
+    volumes:
+      - ./local-reports:/app/reports
+    command: ["npx", "playwright", "test", "--project=chrome", "--shard=1/2"]
+
+  shard2:
+    build: .
+    volumes:
+      - ./local-reports:/app/reports
+    command: ["npx", "playwright", "test", "--project=chrome", "--shard=2/2"]
+
+  report:
+    image: openjdk:11
+    depends_on:
+      - shard1
+      - shard2
+    volumes:
+      - ./local-reports:/app/reports
+    command: ["sh", "-c", "npx allure generate /app/reports -o /app/allure-report --clean && npx allure open /app/allure-report"]

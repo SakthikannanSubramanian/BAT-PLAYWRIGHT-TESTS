@@ -1,0 +1,74 @@
+version: "3.9"
+services:
+  chrome:
+    build: .
+    command: npx playwright test --project=chrome --shard=1/2  
+  firefox:
+    build: .
+    command: npx playwright test --project=firefox --shard=2/2 
+  combine-reports:
+    build: .  
+    command: /bin/bash -c "sleep 5 && ./combine-reports.sh" 
+    depends_on:
+      - chrome
+      - firefox
+    volumes:
+      - ./combined-allure-results:/results/combined-allure-results
+      - ./allure-report:/results/allure-report
+
+# version: "3.9"
+# services:
+#   chrome1:  
+#     build: .
+#     command: npx playwright test --project=chrome --shard=1/2
+#   chrome2: 
+#     build: .
+#     command: npx playwright test --project=chrome --shard=2/2
+#   combine-reports:
+#     build: .  
+#     command: /bin/bash -c "sleep 5 && ./combine-reports.sh" 
+#     depends_on:
+#       - chrome1
+#       - chrome2
+#     volumes:
+#       - ./combined-allure-results:/results/combined-allure-results
+#       - ./allure-report:/results/allure-report
+
+
+# version: "3.9"
+# services:
+#   chrome:
+#     build: .
+#     command: npx playwright test --project=chrome --shard=1/2
+#   firefox:
+#     build: .
+#     command: npx playwright test --project=firefox --shard=2/2
+#   combine-reports:
+#     build: .  
+#     command: /bin/bash -c "sleep 5 && ./combine-reports.sh" 
+#     depends_on:
+#       - chrome
+#       - firefox
+#     volumes:
+#       - ./combined-allure-results:/results/combined-allure-results
+#       - ./allure-report:/results/allure-report
+
+
+
+
+
+  # chrome:
+  #   build: .
+  #   command: > 
+  #     npx playwright test 
+  #     --project=chrome 
+  #     --grep @integration 
+  #     --shard=1/2
+  # chrome2:
+  #   build: .
+  #   command: >
+  #     npx playwright test 
+  #     --project=chrome 
+  #     --grep @integration 
+  #     --shard=2/2
+

@@ -64,5 +64,6 @@ export default defineConfig({
     ],
   ],
   workers: 4,
+  fullyParallel: true,
   timeout:90000,
 });
